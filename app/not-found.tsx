@@ -1,7 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { logo } from "@/assets";
-import Image from "next/image";
 
 const NotFoundPage = () => {
   return (
@@ -9,7 +7,7 @@ const NotFoundPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="bg-amazonBlue w-28 p-2 rounded-sm mx-auto">
-            <Image src={logo} alt="Amazon Logo" width={180} height={100} />
+            RateArab
           </div>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
             Looking for something?

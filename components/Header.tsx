@@ -1,5 +1,5 @@
-import { logo } from "@/assets";
-import Image from "next/image";
+// import { logo } from "@/assets";
+// import Image from "next/image";
 import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
 import { auth } from "@/auth";
@@ -21,12 +21,9 @@ const Header = async () => {
           {/* Logo */}
           <Link href={"/"}>
             <div className="headerItem">
-              <Image
+              <div
                 className="w-28 object-cover mt-1"
-                src={logo}
-                alt="logo"
-                priority
-              />
+              >RateArab</div>
             </div>
           </Link>
           {/* Deliver */}
