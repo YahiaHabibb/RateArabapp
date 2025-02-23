@@ -1,5 +1,3 @@
-// import { logo } from "@/assets";
-// import Image from "next/image";
 import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
 import { auth } from "@/auth";
@@ -10,9 +8,12 @@ import SignInButton from "./SignInButton";
 import HeaderBottom from "./HeaderBottom";
 import SearchInput from "./SearchInput";
 import OrderBtn from "./OrderBtn";
+import { fetchData } from "@/hooks/fetchData";
 
 const Header = async () => {
+  const endpoint = "https://dummyjson.com/products/category-list"
   const session = await auth();
+  const categories = await fetchData(endpoint);
 
   return (
     <header className="bg-transparent sticky top-0 z-50">
@@ -34,7 +35,7 @@ const Header = async () => {
               <p className="text-white font-bold uppercase">USA</p>
             </div>
           </div>
-          <SearchInput />
+          <SearchInput categories={categories} />
 
           {session?.user ? <SignOutButton /> : <SignInButton />}
 

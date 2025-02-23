@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Link } from "lucide-react";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
+  CommandItem,
   CommandList,
 } from "./ui/command";
+import { CategoryItems } from "@/type";
+import { cn } from "@/lib/utils";
 
-const CategoryListView = () => {
+const CategoryListView = ({ categories }: CategoryItems) => {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>('');
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -30,8 +34,22 @@ const CategoryListView = () => {
         <Command className="bg-amazonBlue backdrop-blur-md text-white">
           <CommandInput placeholder="Search Category" className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
-            <CommandGroup className="text-white">category</CommandGroup>
+            <CommandEmpty>No categories found.</CommandEmpty>
+            <CommandGroup className="text-white">
+              {categories?.map((category:string) => (
+                <CommandItem value={category} key={category} onSelect={(currentValue) => {
+                  setValue(currentValue === value ? '' : currentValue);
+                  setOpen(false);
+                }}>
+                  <Link href={`/category/${category}`}
+                  className="flex items-center justify-between w-full px-2 py-1 capitalize font-medium"
+                  >
+                    {category}
+                    <Check className={cn('ml-auto', value === category ? 'opacity-100' : 'opacity-10')} />
+                  </Link>
+                </CommandItem>
+              ))}
+            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>

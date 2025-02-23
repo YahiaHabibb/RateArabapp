@@ -6,6 +6,8 @@ import Link from 'next/link';
 
 import React from 'react'
 import ProductIcon from './ProductIcon';
+import AddToCartBtn from './AddToCartBtn';
+import PriceFormat from './PriceFormat';
 
 const ProductCard = ({
     product, 
@@ -25,6 +27,15 @@ const ProductCard = ({
                 group-hover:scale-110 overflow-hidden hoverEffect'/>
                 <ProductIcon product={product}/>
             </Link>
+        </div>
+        <div className='px-4 py-2 space-y-2'>
+            <div className='space-y-1 h-36' >
+                <h2 className='line-clamp-1 '>{product?.title}</h2>
+                <p className='text-sm text-amazonBlue/90 line-clamp-3'>{product?.description}</p>
+                    <PriceFormat amount={product?.price}/>
+                <p className='text-sm '>Category: <span className='font-semibold'>{product?.category}</span></p>
+            </div>
+            <AddToCartBtn product={product} />
         </div>
     </div>
     )

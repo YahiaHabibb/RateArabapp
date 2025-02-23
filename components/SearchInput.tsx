@@ -6,12 +6,28 @@ import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 import { CategoryItems, Product } from "@/type";
 import CategoryListView from "./CategoryListView";
+import { fetchData } from "@/hooks/fetchData";
 
-const SearchInput = () => {
+const SearchInput = ({ categories }: CategoryItems) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [isInputFocused, setIsInputFocused] = useState(false); // New state to manage input focus
   const searchContainerRef = useRef<HTMLDivElement>(null); // Ref to detect clicks outside
+
+  useEffect(() => {
+    const getData = async() => {
+      const endpoint = `https://dummyjson.com/products/search?q=${searchQuery}`;
+      try {
+        const data = await fetchData(endpoint);
+        setProducts(data?.products);
+      } catch (error) {
+        console.error('Error fetching', error);
+      }
+    };
+    getData();
+  },[searchQuery]);
+
+  console.log(products);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -43,7 +59,7 @@ const SearchInput = () => {
       ref={searchContainerRef}
       className="flex-1 h-10 mx-4 hidden md:inline-flex items-center justify-between relative"
     >
-      <CategoryListView />
+      <CategoryListView categories={categories} />
       <input
         className="w-full h-full rounded-tr-md rounded-br-md px-2 placeholder:text-sm text-base text-black placeholder:text-black/70 border-[3px] border-transparent outline-none focus-visible:border-amazonOrange"
         type="text"
@@ -66,7 +82,7 @@ const SearchInput = () => {
         <div className="absolute left-0 top-12 w-full mx-auto h-auto max-h-96 bg-white rounded-md overflow-y-scroll cursor-pointer text-black">
           {filteredProducts?.length > 0 ? (
             <div className="flex flex-col">
-              {filteredProducts?.map((item: Product) => (
+              {products?.map((item: Product) => (
                 <Link
                   key={item?.id}
                   href={{
