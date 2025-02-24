@@ -12,7 +12,7 @@ const PriceFormat = ({amount, className}: Props) => {
         maximumFractionDigits: 2,
     });
     return (
-    <p className={cn('text-base font-semibold', className)}>{formattedPrice}</p>
+    <span className={cn('text-base font-semibold', className)}>{formattedPrice}</span>
     );
 };
 

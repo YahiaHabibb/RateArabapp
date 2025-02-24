@@ -11,9 +11,9 @@ import PriceFormat from './PriceFormat';
 interface Props {
     product:Product;
     className?: string;
-    subSubtotal?: boolean;
+    showSubtotal?: boolean;
 }
-const AddToCartBtn = ({ product, className, subSubtotal = true }: Props) => {
+const AddToCartBtn = ({ product, className, showSubtotal = true }: Props) => {
     const { addToCart, cartProduct, decreaseQuantity } = store();
     const [existingProduct, setExistingProduct] = useState<Product | null>(null);
     useEffect(() => {
@@ -50,7 +50,7 @@ const AddToCartBtn = ({ product, className, subSubtotal = true }: Props) => {
                     <p>{existingProduct?.quantity}</p>
                     <button onClick={handleAddCart} className='bg-[#f7f7f7] text-black p-2 border-[1px] border-gray-200 hover:border-skyText rounded-full text-sm hover:bg-white duration-200 cursor-pointer'><FaPlus /></button>
                 </div>
-                {existingProduct && subSubtotal && (
+                {existingProduct && showSubtotal && (
                     <div>
                         <p>SubTotal:</p>
                         <PriceFormat amount={(existingProduct?.quantity as number) * existingProduct?.price} />

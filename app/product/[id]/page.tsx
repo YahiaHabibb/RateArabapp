@@ -1,8 +1,8 @@
-import { Container } from 'lucide-react';
+import Container from '@/components/Container';
+import SingleProduct from '@/components/SingleProduct';
 import React from 'react'
 
-
-const singleProduct = async ({
+const SingleProductPage = async ({
     params,
 } : {
     params: Promise<{id : string}>;
@@ -11,7 +11,7 @@ const singleProduct = async ({
     if(!id) {
         return (
         <Container className='py-10'>
-            <p className='text-center text-red-500'>No Product Id </p>
+            <p className='text-center text-red-500'>No Product Id provided</p>
         </Container>
             )
     }
@@ -21,7 +21,11 @@ const singleProduct = async ({
             throw new Error('Failed to fetch product data')
         }
         const product = await res.json();
-        return <Container className='py-10'>Single Product</Container>
+        return( 
+            <Container className='py-10'>
+                <SingleProduct product={product}/>
+            </Container>
+            )
     } catch (error) {
         console.error('Error fetching product', error)
         return (
@@ -32,4 +36,4 @@ const singleProduct = async ({
     }
 };
 
-export default singleProduct;
+export default SingleProductPage;
