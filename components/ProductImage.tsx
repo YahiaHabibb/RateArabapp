@@ -36,7 +36,6 @@ const ProductImage = ({product}: {product: Product}) => {
                     alt='mainImage'
                     priority
                     className='w-full max-h-[550px] object-contain'
-
                 />
             )}
         </motion.div>

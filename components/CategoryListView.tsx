@@ -32,7 +32,7 @@ const CategoryListView = ({ categories }: CategoryItems) => {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Command className="bg-amazonBlue backdrop-blur-md text-white">
-          <CommandInput placeholder="Search Category" className="h-9" />
+          <CommandInput placeholder="Search Category" className="h-9 text-black" />
           <CommandList>
             <CommandEmpty>No categories found.</CommandEmpty>
             <CommandGroup className="text-white">
