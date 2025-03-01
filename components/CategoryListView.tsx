@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { Check, ChevronDown, Link } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -12,6 +12,7 @@ import {
 } from "./ui/command";
 import { CategoryItems } from "@/type";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const CategoryListView = ({ categories }: CategoryItems) => {
   const [open, setOpen] = useState(false);

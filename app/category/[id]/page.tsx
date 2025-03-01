@@ -3,19 +3,16 @@ import CategoryProducts from '@/components/CategoryProducts';
 import { fetchData } from '@/hooks/fetchData';
 import React from 'react'
 
-const Categorypage = async ({
-    params,
-}: {
-    params: Promise<{ id: string}>;
-}) => {
+const Categorypage = async ({ params }: { params: { id: string } }) => {
     const endpoint = 'https://dummyjson.com/products/category-list';
     const categories = await fetchData(endpoint);
-    const {id} = await params
+    const { id } = params; // إزالة await لأنه ليس Promise
     return (
-            <Container className='py-10'>
-                <CategoryProducts categories={categories} id={id} />
-            </Container>
-    )
+        <Container className='py-10'>
+            <CategoryProducts categories={categories} id={id} />
+        </Container>
+    );
 };
+
 
 export default Categorypage

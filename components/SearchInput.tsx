@@ -15,11 +15,15 @@ const SearchInput = ({ categories }: CategoryItems) => {
   const searchContainerRef = useRef<HTMLDivElement>(null); // Ref to detect clicks outside
 
   useEffect(() => {
+    if (!searchQuery.trim()) {
+      setProducts([]);
+      return;
+    }
     const getData = async() => {
-      const endpoint = `https://dummyjson.com/products/search?q=${searchQuery}`;
       try {
+        const endpoint = `https://dummyjson.com/products/search?q=${searchQuery}`;
         const data = await fetchData(endpoint);
-        setProducts(data?.products);
+        setProducts(data?.products || []);
       } catch (error) {
         console.error('Error fetching', error);
       }
