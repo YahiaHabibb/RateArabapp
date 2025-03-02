@@ -6,7 +6,7 @@ import React from 'react'
 const Categorypage = async ({ params }: { params: { id: string } }) => {
     const endpoint = 'https://dummyjson.com/products/category-list';
     const categories = await fetchData(endpoint);
-    const { id } = params; // إزالة await لأنه ليس Promise
+    const { id } = params; 
     return (
         <Container className='py-10'>
             <CategoryProducts categories={categories} id={id} />
