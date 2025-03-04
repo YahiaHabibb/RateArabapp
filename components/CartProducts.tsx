@@ -11,7 +11,7 @@ const CartProducts = () => {
 
     return (
         <div>
-            {!cartProduct?.length > 0 ? ( 
+            {cartProduct?.length > 0 ? ( 
             <>
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl ">ShoppingCart</h1>
                 <div className="mt-10 lg:grid lg:grid-col-12 lg:items-start lg:gap-x-12">

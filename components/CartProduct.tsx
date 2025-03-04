@@ -7,6 +7,7 @@ import PriceFormat from './PriceFormat'
 import AddToCartBtn from './AddToCartBtn'
 import { IoClose } from 'react-icons/io5'
 import { FaCheck } from 'react-icons/fa'
+import toast from 'react-hot-toast'
 
 
 const CartProduct = ({ product } : { product :Product }) => {
