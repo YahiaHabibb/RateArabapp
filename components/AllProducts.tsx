@@ -97,10 +97,10 @@ const AllProducts = ({ categories }: { categories: string[] }) => {
                             categories={categories}
                             setSelectedCategories={setSelectedCategories}
                             selectedCategories={selectedCategories}
-                            priceFilter={priceFilter}
-                            setPriceFilter={setPriceFilter}
-                            priceValue={priceValue}
-                            setPriceValue={setPriceValue}
+                            setPriceFilter={priceFilter}
+                            priceFilter={setPriceFilter}
+                            setPriceValue={priceValue}
+                            priceValue={setPriceValue}
                             defaultPrice={defaultPrice}
                             maxPrice={maxPrice}
                         />

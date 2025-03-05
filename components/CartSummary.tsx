@@ -12,31 +12,34 @@ const CartSummary = () => {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const respone = await fetch('/api/checkout', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body:JSON.stringify({
-          items: cartProduct,
-          email: session?.user?.email,
-        })
-      });
-      const result = await response.json()
-      const checkoutUrl = await result?.url()
-      if(checkoutUrl){
-        window.location.href = checkoutUrl;
-      }
-      if(result.error){
-        alert(result?.error?.message);
-      }
+        const response = await fetch('/api/checkout', { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                items: cartProduct,
+                email: session?.user?.email,
+            })
+        });
+
+        const result = await response.json();
+
+        if (result?.url) { 
+            setLoading(false); 
+            window.location.href = result.url;
+        } else if (result?.error) {
+            setLoading(false);
+            alert(result.error.message);
+        }
     } catch (error) {
-      console.log("Payment Error", error)
-      setLoading(false)
+        console.log("Payment Error", error);
+        setLoading(false);
     }
-  };
+};
+
 
   return (
     <section className='mt-16 rounded-lg bg-gray-100 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8'>
