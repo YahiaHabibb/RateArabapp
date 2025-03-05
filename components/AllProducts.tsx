@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 
 const AllProducts = ({ categories }: { categories: string[] }) => {
     const [loading, setLoading] = useState(false);
-    const [products, setProducts] = useState<Product[]>([]); // ✅ تعديل اسم المتغير
+    const [products, setProducts] = useState<Product[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState<string>("");
@@ -24,7 +24,7 @@ const AllProducts = ({ categories }: { categories: string[] }) => {
     const perPage = 12;
     const observerRef = useRef<HTMLDivElement | null>(null);
 
-    // 🔹 دالة تحميل المنتجات
+    // Load products function
     const loadMoreProducts = async (reset = false) => {
         if (loading || (!hasMore && !reset)) return;
         setLoading(true);
@@ -42,7 +42,7 @@ const AllProducts = ({ categories }: { categories: string[] }) => {
                 setCurrentPage(1);
             } else if (data?.products?.length > 0) {
                 setProducts((prev) => [...prev, ...data.products]);
-                setCurrentPage((prev) => prev + 1); // ✅ تحديث الصفحة عند تحميل المزيد
+                setCurrentPage((prev) => prev + 1);
             } else {
                 setHasMore(false);
             }
@@ -53,17 +53,17 @@ const AllProducts = ({ categories }: { categories: string[] }) => {
         }
     };
 
-    // 🔹 استدعاء البيانات عند تحميل الصفحة
+    // Load data on initial render
     useEffect(() => {
         loadMoreProducts();
     }, []);
 
-    // 🔹 إعادة تحميل المنتجات عند تغيير الفلاتر
+    // Reload products when filters change
     useEffect(() => {
-        loadMoreProducts(true); // ✅ إعادة تحميل مع تصفير الصفحة
+        loadMoreProducts(true);
     }, [selectedCategories, priceFilter]);
 
-    // 🔹 إضافة Infinite Scroll باستخدام Intersection Observer
+    // Setup Infinite Scroll with Intersection Observer
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -97,17 +97,17 @@ const AllProducts = ({ categories }: { categories: string[] }) => {
                             categories={categories}
                             setSelectedCategories={setSelectedCategories}
                             selectedCategories={selectedCategories}
-                            setPriceFilter={priceFilter}
-                            priceFilter={setPriceFilter}
-                            setPriceValue={priceValue}
-                            priceValue={setPriceValue}
+                            priceFilter={priceFilter}
+                            setPriceFilter={setPriceFilter}
+                            priceValue={priceValue}
+                            setPriceValue={setPriceValue}
                             defaultPrice={defaultPrice}
                             maxPrice={maxPrice}
                         />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {products?.map((product, index) => (
-                            <ProductCard key={index.toString()} product={product} />
+                            <ProductCard key={product.id || index.toString()} product={product} />
                         ))}
                     </div>
                 </CardContent>
@@ -120,7 +120,6 @@ const AllProducts = ({ categories }: { categories: string[] }) => {
                     </div>
                 )}
             </div>
-            {/* Loader */}
         </Container>
     );
 };
