@@ -1,7 +1,8 @@
+import { Product } from "@/type";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from 'stripe'
 
-export const Post = async (request:NextRequest) => {
+export async function POST (request:NextRequest) {
     const STRIPE_KEY= process.env.STRIPE_SECRET_KEY as string;
     if(!STRIPE_KEY) throw new Error("Stripe is not initiated");
     const stripe = new Stripe(STRIPE_KEY)
@@ -11,8 +12,8 @@ export const Post = async (request:NextRequest) => {
     const cancelUrl = `${NEXT_AUTH_URL}/cart`
     try {
         const reqBody = await request.json();
-        const { items, email } = await reqBody;
-        const extractingItems = await items?.map((item:Product) => ({
+        const { items, email } = reqBody;
+        const extractingItems = items?.map((item: Product) => ({
             quantity: item?.quantity,
             price_data: {
                 currency: "usd",
@@ -35,7 +36,7 @@ export const Post = async (request:NextRequest) => {
             },
             success_url: successUrl,
             cancel_url: cancelUrl,
-            meradata: {
+            metadata: {
                 email,
             },
             customer_email: email,
