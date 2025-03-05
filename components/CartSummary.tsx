@@ -1,15 +1,41 @@
+'use client';
 import { useSession } from 'next-auth/react'
-import React from 'react'
+import React, { useState } from 'react'
 import PriceFormat from './PriceFormat'
 import { calculateCartTotals } from '@/lib/utils'
-import toast from 'react-hot-toast'
+import { store } from '@/lib/store'
 
 const CartSummary = () => {
-  const { data: session  } = useSession()
+  const { data: session  } = useSession();
+  const { cartProduct } = store()
   const { totalAmt } = calculateCartTotals();
+  const [loading, setLoading] = useState(false);
 
-  const handlePayment = () => {
-    toast.success("Payment will go on")
+  const handlePayment = async () => {
+    setLoading(true)
+    try {
+      const respone = await fetch('/api/checkout', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          items: cartProduct,
+          email: session?.user?.email,
+        })
+      });
+      const result = await response.json()
+      const checkoutUrl = await result?.url()
+      if(checkoutUrl){
+        window.location.href = checkoutUrl;
+      }
+      if(result.error){
+        alert(result?.error?.message);
+      }
+    } catch (error) {
+      console.log("Payment Error", error)
+      setLoading(false)
+    }
   };
 
   return (
@@ -41,10 +67,10 @@ const CartSummary = () => {
         </dl>
       </div>
       <button 
-        disabled={!session?.user}
+        disabled={!session?.user || loading}
         type='submit'
         onClick={handlePayment}
-        className='w-full mt-6 rounded-md border border-transparent bg-gray-800 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-skyText focus:ring-offset-2 focus:ring-offset-gray-50 duration-200'>
+        className='w-full mt-6 rounded-md border border-transparent bg-amazonLight px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-amazonBlue hoverEffect focus:outline-none focus:ring-2 focus:ring-amazonOrangeDark disabled:bg-gray-400 disabled:cursor-not-allowed'>
           CheckOut
       </button>
     </section>

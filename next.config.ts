@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "lhs.googleusercontent.com",
+        hostname: "lh3.googleusercontent.com",
       },
       {
         protocol: "https",

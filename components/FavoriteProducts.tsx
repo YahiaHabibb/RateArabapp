@@ -10,7 +10,7 @@ const FavoriteProducts = () => {
     const { favoriteProduct } = store()
   return (
     <div className='mt-5'>
-      <div className='overflox-x-auto'>
+      <div className='overflow-x-auto'>
         <table className='w-full border-collapse'>
           <thead>
             <tr className='bg-amazonLight/10 rounded-md'>
@@ -32,8 +32,8 @@ const FavoriteProducts = () => {
                     className='border rounded-md group hidden md:inline-flex'
                     >
                     <Image 
-                      src={product?.images[0]}
-                      alt='ProductImage'
+                      src={product?.images?.[0]}
+                      alt='Product Image'
                       width={80}
                       height={80}
                       className='rounded-md group-hover:scale-105 hoverEffect h-20 w-20 object-contain'

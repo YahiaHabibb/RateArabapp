@@ -7,7 +7,7 @@ const SignInButton = () => {
     <form
       action={async () => {
         "use server";
-        // await signIn("google", { redirectTo: "/" });
+        await signIn("google", { redirectTo: "/" });
         await signIn();
       }}
       className="text-xs text-gray-100 flex flex-col justify-center px-2 border border-transparent hover:border-white cursor-pointer duration-300 h-[70%]"
