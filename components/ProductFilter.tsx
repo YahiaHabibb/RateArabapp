@@ -5,16 +5,17 @@ import { Label } from "./ui/label";
 import { Slider } from "./ui/slider";
 
 interface Props {
-    categories: string[]
+    categories: string[];
     setSelectedCategories: (category: string) => void;
     selectedCategories: string;
-    priceFilter: (value : string) => void;
-    setPriceFilter: string;
-    priceValue: (value : number) => void;
-    setPriceValue: number;
+    priceFilter: string;
+    setPriceFilter: (value: string) => void;
+    priceValue: number;
+    setPriceValue: (value: number) => void;
     defaultPrice: number;
     maxPrice: number;
 }
+
 const ProductFilter = ({
     categories,
     setSelectedCategories,
@@ -26,7 +27,8 @@ const ProductFilter = ({
     defaultPrice,
     maxPrice,
 }: Props) => {
-    const [categoriesArray, setCategoriesArray] = useState(categories.slice(0,8));
+    const [categoriesArray, setCategoriesArray] = useState(categories.slice(0, 8));
+    
     return (
         <div className="space-y-4">
             <Title className="text-lg">Filters</Title>
@@ -42,33 +44,34 @@ const ProductFilter = ({
                             /> 
                             <Label htmlFor={`category-${item}`} className="ml-2 capitalize cursor-pointer">{item}</Label>
                         </div>
-                    ))};
-                    {categoriesArray?.length > 8 ? (
-                        <button onClick={() => setCategoriesArray(categories.slice(0,8))} className="text-xs font-semibold text-amazonBlue underline underline-offset-2 hover:text-amazonOrangeDark hoverEffect">
-                            minimize categories
+                    ))}
+                    {categories.length > 8 ? (
+                        <button 
+                            onClick={() => setCategoriesArray(
+                                categoriesArray.length > 8 ? categories.slice(0, 8) : categories
+                            )} 
+                            className="text-xs font-semibold text-amazonBlue underline underline-offset-2 hover:text-amazonOrangeDark hoverEffect"
+                        >
+                            {categoriesArray.length > 8 ? "Minimize categories" : "Show all categories"}
                         </button>
-                    ) : (
-                        <button onClick={() => setCategoriesArray(categories)} className="text-xs font-semibold text-amazonBlue underline underline-offset-2 hover:text-amazonOrangeDark hoverEffect">
-                            show all categories
-                        </button>
-                    )}
+                    ) : null}
                 </div>
             </div>
             <div>
-                <h4 className="font-medium mb-2 ">Price Range</h4>
+                <h4 className="font-medium mb-2">Price Range</h4>
                 <div className="space-y-2">
                     {[
                         { value: "desc", title: "High to Low"},
                         { value: "asc", title: "Low to High"},
                     ].map((item) => (
-                        <div key={item?.title} className="flex items-center">
+                        <div key={item.title} className="flex items-center">
                             <Checkbox 
-                                id={`price-${item?.value}`}
-                                onCheckedChange={() => setPriceFilter(item?.value)}
-                                checked={item?.value === priceFilter}
+                                id={`price-${item.value}`}
+                                onCheckedChange={() => setPriceFilter(item.value)}
+                                checked={item.value === priceFilter}
                             />
-                            <Label htmlFor={`price-${item?.value}`} className="ml-2 ">
-                                {item?.title}
+                            <Label htmlFor={`price-${item.value}`} className="ml-2">
+                                {item.title}
                             </Label>
                         </div>
                     ))}
@@ -83,13 +86,14 @@ const ProductFilter = ({
                     />
                     {priceValue > 0 && (
                         <p className="mt-3 text-xs">
-                            Filter price : <span className="font-bold">{defaultPrice}</span> to { " "}
+                            Filter price: <span className="font-bold">${priceValue}</span> to{" "}
+                            <span className="font-bold">${maxPrice}</span>
                         </p>
                     )}
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
-export default ProductFilter
+export default ProductFilter;
